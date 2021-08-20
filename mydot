@@ -1,8 +1,21 @@
 #!/bin/bash
 
+#
+# This command is a wrapper for the dot command.
+#
+# Unlike the dot command,
+# this command allows you to omit the name and format of the output file.
+#
+# Example:
+#   $ mydot foo.dot
+#   $ ls
+#   foo.dot foo.pdf
+#
+
+
 NEED_TO_ADD_OUTPUT_FILE=true
 NEED_TO_ADD_OUTPUT_FORMAT=true
-OUTPUT_FORMAT='pdf'
+OUTPUT_FORMAT=pdf
 
 while getopts :o:T: OPT
 do
