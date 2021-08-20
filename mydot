@@ -1,0 +1,31 @@
+#!/bin/bash
+
+NEED_TO_ADD_OUTPUT_FILE=true
+NEED_TO_ADD_OUTPUT_FORMAT=true
+OUTPUT_FORMAT='pdf'
+
+while getopts :o:T: OPT
+do
+	case $OPT in
+		o)  NEED_TO_ADD_OUTPUT_FILE=false
+		    OUTPUT_FORMAT=${OPTARG##*.}  ## get the filename extension
+			;;
+		T)  NEED_TO_ADD_OUTPUT_FORMAT=false
+		    OUTPUT_FORMAT=$OPTARG
+			;;
+		*)  break
+			;;
+	esac
+done
+
+args=$@
+shift $((OPTIND - 1))
+if "${NEED_TO_ADD_OUTPUT_FILE}"; then
+	file=$(basename $@ .dot)
+	args="-o ${file}.${OUTPUT_FORMAT} ${args}"
+fi
+if "${NEED_TO_ADD_OUTPUT_FORMAT}"; then
+	args="-T ${OUTPUT_FORMAT} ${args}"
+fi
+
+dot $args
